@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud Wise | Student Cloud Storage Awareness</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    /* --- GLOBAL & THEME VARIABLES (CATCHY STYLE) --- */
+    :root {
+        /* Vivid Color Palette */
+        --primary: #2563eb;       /* black */
+        --primary-dark: #1e40af;
+        --accent: #8b5cf6;        /* Violet */
+        --accent-glow: #a78bfa;
+        
+        /* Cycle Specific Colors (Spectrum) */
+        --c-step-1: #ef4444; /* Red - Select */
+        --c-step-2: #f97316; /* Orange - Setup */
+        --c-step-3: #eab308; /* Yellow - Upload */
+        --c-step-4: #06b6d4; /* Cyan - Sync */
+        --c-step-5: #22c55e; /* Green - Share */
+        --c-step-6: #3b82f6; /* Blue - Secure */
+        
+        --bg-body: #f0f4f8;
+        --bg-card: #ffffff;
+        --text-main: #1e293b;
+        --text-muted: #64748b;
+        
+        --success: #22c55e;
+        --danger: #ef4444;
+        
+        /* Gradients */
+        --grad-primary: linear-gradient(135deg, #2563eb 0%, #8b5cf6 100%);
+        --grad-header: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+        --grad-glass: rgba(255, 255, 255, 0.7);
+    }
+
+    body {
+        font-family: 'Segoe UI', 'Space Grotesk', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: var(--bg-body);
+        background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+        background-size: 20px 20px; /* Subtle dot pattern */
+        color: var(--text-main);
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    /* HEADER - Vivid & Modern */
+    header {
+        background: var(--grad-header);
+        color: white;
+        padding: 40px 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    /* Decorative header circles */
+    header::before {
+        content: ''; position: absolute; top: -50px; left: -50px; width: 200px; height: 200px;
+        background: rgba(255,255,255,0.1); border-radius: 50%;
+    }
+    header::after {
+        content: ''; position: absolute; bottom: -50px; right: -50px; width: 300px; height: 300px;
+        background: rgba(59, 130, 246, 0.2); border-radius: 50%;
+    }
+
+    header h1 { 
+        margin: 0; 
+        letter-spacing: 2px; 
+        font-size: 2.5rem; 
+        text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        background: linear-gradient(to right, #60a5fa, #c084fc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    header p { margin: 10px 0 0; opacity: 0.9; font-size: 1.2rem; font-weight: 300; }
+
+    /* NAVIGATION - Glassmorphism */
+    nav {
+        background: var(--grad-glass);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        padding: 0;
+        text-align: center;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(255,255,255,0.5);
+        box-shadow: 0 4px 20px rgba(37, 99, 235, 0.1);
+    }
+    nav a {
+        color: var(--text-main);
+        text-decoration: none;
+        display: inline-block;
+        padding: 15px 20px;
+        font-weight: 600;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        border-radius: 8px;
+        margin: 5px 2px;
+    }
+    nav a:hover {
+        background: rgba(37, 99, 235, 0.1);
+        color: var(--primary);
+        transform: translateY(-2px);
+    }
+    nav a.active {
+        background: var(--grad-primary);
+        color: white;
+        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+    }
+
+    /* SECTIONS */
+    .page-section {
+        display: none; 
+        padding: 50px 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+        animation: fadeIn 0.6s ease-out;
+    }
+    
+    .active-section {
+        display: block; 
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* HERO SECTION */
+    #home {
+        text-align: center;
+        padding: 80px 20px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+        margin-top: 40px;
+    }
+    #home h2 { 
+        font-size: 3rem; 
+        margin-bottom: 20px;
+        background: var(--grad-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    /* CARDS - Modern & Colorful */
+    .card {
+        background: var(--bg-card);
+        padding: 30px;
+        margin: 20px 0;
+        border-radius: 16px;
+        border: 1px solid rgba(255,255,255,0.6);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.03), 0 1px 3px rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(37, 99, 235, 0.15);
+    }
+
+    .btn {
+        background: var(--grad-primary);
+        color: white;
+        padding: 14px 35px;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        font-weight: 700;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .btn:hover { 
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(139, 92, 246, 0.5);
+        background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    }
+
+    /* HOME SPECIFIC */
+    .home-content-card {
+        background: white;
+        color: var(--text-main);
+        padding: 50px;
+        margin: 40px auto;
+        max-width: 1000px;
+        border-radius: 24px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+        text-align: left;
+        border-left: 8px solid var(--accent);
+    }
+    .home-content-card h3 {
+        color: var(--primary-dark);
+        font-size: 2rem;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .objectives-list li {
+        font-size: 1.1rem;
+        margin-bottom: 12px;
+        color: #334155;
+    }
+    .objectives-list li::before {
+        content: '🔹';
+        margin-right: 10px;
+    }
+
+    /* SCOPE GRID */
+    .scope-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        margin-top: 30px;
+    }
+    .scope-item {
+        background: #f8fafc;
+        padding: 20px;
+        border-radius: 16px;
+        text-align: center;
+        border: 1px solid #e2e8f0;
+        transition: 0.3s;
+    }
+    .scope-item:hover {
+        border-color: var(--primary);
+        background: white;
+    }
+    .scope-item img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 15px;
+    }
+    .scope-item h4 { color: var(--primary); margin: 10px 0 5px; }
+
+    /* TIPS SECTION STYLES */
+    .tips-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 60px;
+    }
+    @media (max-width: 768px) { .tips-grid { grid-template-columns: 1fr; } }
+
+    .dos-box, .donts-box {
+        padding: 30px;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+    .dos-box {
+        background: linear-gradient(135deg, #dcfce7 0%, #f0fdf4 100%);
+        border: 1px solid #bbf7d0;
+    }
+    .donts-box {
+        background: linear-gradient(135deg, #fee2e2 0%, #fef2f2 100%);
+        border: 1px solid #fecaca;
+    }
+    .dos-box h3 { color: #15803d; display: flex; align-items: center; gap: 10px; }
+    .donts-box h3 { color: #b91c1c; display: flex; align-items: center; gap: 10px; }
+
+    /* --- STATIC COLORFUL CYCLE --- */
+    #recovery-cycle-wrapper {
+        --c-bg: #ffffff;
+        --c-border: #e2e8f0;
+    }
+
+    #recovery-cycle-wrapper .cycle-card {
+        background: var(--c-bg);
+        border-radius: 30px;
+        border: 1px solid var(--c-border);
+        padding: 60px 20px;
+        box-shadow: 0 25px 80px rgba(0,0,0,0.06);
+        max-width: 900px;
+        width: 100%;
+        margin: 60px auto;
+        position: relative;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    #recovery-cycle-wrapper .cycle-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; height: 6px;
+        background: linear-gradient(90deg, var(--c-step-1), var(--c-step-2), var(--c-step-3), var(--c-step-4), var(--c-step-5), var(--c-step-6));
+    }
+
+    #recovery-cycle-wrapper h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        color: var(--text-main);
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 2.2rem;
+        font-weight: 800;
+    }
+
+    #recovery-cycle-wrapper .subtitle {
+        color: var(--text-muted);
+        margin-bottom: 60px;
+        font-size: 1.2rem;
+        font-weight: 500;
+    }
+
+    .diagram-container {
+        position: relative;
+        width: 100%;
+        max-width: 600px;
+        height: 600px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* HEXAGON SHAPES */
+    .hex {
+        position: absolute;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        z-index: 10;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    /* CENTER HUB */
+    .center-hex {
+        width: 180px;
+        height: 200px;
+        z-index: 20;
+        background: var(--grad-primary);
+        color: white;
+        box-shadow: 0 10px 30px rgba(37, 99, 235, 0.4);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        line-height: 1.1;
+    }
+    .center-hex span { font-weight: 800; text-transform: uppercase; font-size: 1.1rem; }
+
+    /* OUTER STEPS */
+    .outer-hex {
+        width: 130px;
+        height: 150px;
+        cursor: default;
+        background: white;
+        border: 4px solid; 
+    }
+
+    /* Positioning & Coloring */
+    .pos-1 { transform: translateY(-220px); border-color: var(--c-step-1); color: var(--c-step-1); }
+    .pos-2 { transform: translate(190px, -110px); border-color: var(--c-step-2); color: var(--c-step-2); }
+    .pos-3 { transform: translate(190px, 110px); border-color: var(--c-step-3); color: var(--c-step-3); }
+    .pos-4 { transform: translateY(220px); border-color: var(--c-step-4); color: var(--c-step-4); }
+    .pos-5 { transform: translate(-190px, 110px); border-color: var(--c-step-5); color: var(--c-step-5); }
+    .pos-6 { transform: translate(-190px, -110px); border-color: var(--c-step-6); color: var(--c-step-6); }
+
+    /* HOVER EFFECTS */
+    .outer-hex:hover {
+        z-index: 15;
+        background: #f8fafc;
+    }
+
+    /* CONNECTORS */
+    .connector {
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        pointer-events: none;
+        z-index: 5;
+    }
+    .connector-svg {
+        width: 100%;
+        height: 100%;
+    }
+    .connector-path {
+        fill: none;
+        stroke: #cbd5e1;
+        stroke-width: 2;
+        stroke-dasharray: 8, 8;
+    }
+
+    /* INNER CONTENT */
+    .hex-content {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 15px;
+        box-sizing: border-box;
+        z-index: 30;
+    }
+    .step-icon { font-size: 2rem; margin-bottom: 5px; }
+    .hex-content h4 {
+        margin: 0;
+        font-size: 0.9rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        font-family: 'Space Grotesk', sans-serif;
+    }
+    .hex-content p {
+        margin: 5px 0 0;
+        font-size: 0.75rem;
+        color: #64748b;
+        line-height: 1.2;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .diagram-container { transform: scale(0.6); }
+        .cycle-card { padding: 20px; margin-bottom: -100px; }
+        h3 { font-size: 1.5rem; }
+    }
+
+    /* OTHER SECTIONS */
+    .info-box {
+        background: #f0f9ff;
+        border-left: 5px solid var(--primary);
+        border-radius: 8px;
+        padding: 25px;
+    }
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+    .gallery-item {
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        border-radius: 16px;
+        font-weight: bold;
+        background: var(--grad-primary);
+        text-align: center;
+        padding: 10px;
+    }
+    .forum-table { width: 100%; border-collapse: collapse; }
+    .forum-table th { text-align: left; background: var(--primary); color: white; padding: 15px; }
+    .forum-table td { padding: 15px; border-bottom: 1px solid #eee; }
+    
+    /* POLL STYLES */
+    .poll-item {
+        background: white;
+        padding: 20px;
+        margin-bottom: 15px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    }
+    .poll-btn {
+        flex: 1;
+        padding: 12px;
+        border: 2px solid var(--primary);
+        background: white;
+        color: var(--primary);
+        font-weight: bold;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+    .poll-btn.selected-yes { background: var(--success); border-color: var(--success); color: white; }
+    .poll-btn.selected-no { background: var(--danger); border-color: var(--danger); color: white; }
+    .result-bar-container { height: 25px; border-radius: 15px; overflow: hidden; background: #eee; margin-bottom: 5px; display: flex;}
+    .bar-yes { background: var(--success); height: 100%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: white; font-weight: bold; transition: width 0.5s;}
+    .bar-no { background: var(--danger); height: 100%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: white; font-weight: bold; transition: width 0.5s;}
+    
+    /* CHATBOT */
+    .chat-container { border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; background: white; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+    .chat-log { height: 350px; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; background: #f8fafc; }
+    .chat-message { padding: 12px 18px; border-radius: 20px; max-width: 80%; font-size: 14px; line-height: 1.5; }
+    .bot-msg { background: white; border: 1px solid #e2e8f0; align-self: flex-start; border-bottom-left-radius: 4px; }
+    .user-msg { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+    .chat-input-area { display: flex; padding: 15px; background: white; gap: 10px; border-top: 1px solid #e2e8f0; }
+    .chat-input-area input { 
+        flex: 1; padding: 12px 20px; border-radius: 25px; border: 2px solid #e2e8f0; outline: none; transition: 0.3s; 
+    }
+    .chat-input-area input:focus { border-color: var(--primary); }
+    
+    .faq-chip {
+        background: #f1f5f9; border: 1px solid #cbd5e1; color: var(--text-main); padding: 8px 16px; border-radius: 20px; font-size: 12px; cursor: pointer; transition: 0.2s; margin: 4px;
+    }
+    .faq-chip:hover { background: var(--primary); color: white; border-color: var(--primary); }
+
+    /* RESEARCH & STATS */
+    .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+    .stat-card {
+        background: var(--primary);
+        color: white;
+        padding: 20px;
+        text-align: center;
+        border-radius: 10px;
+    }
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: var(--accent);
+    }
+
+    .paper-preview {
+        background: white;
+        padding: 40px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-family: 'Times New Roman', serif;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        margin-top: 20px;
+    }
+    .paper-preview h1 { font-size: 24px; text-align: center; margin-bottom: 20px; }
+    .paper-preview h2 { font-size: 18px; margin-top: 20px; border: none; color: var(--text); }
+    .paper-preview p { font-size: 14px; line-height: 1.6; color: #444; }
+
+    /* VIDEO */
+    .video-card {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto 20px auto;
+    }
+    .video-placeholder {
+        width: 100%;
+        height: 0;
+        padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+        position: relative;
+        background: #ddd;
+    }
+    .video-placeholder iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+    .video-caption {
+        padding: 15px;
+    }
+
+    /* FOOTER */
+    footer {
+        background: var(--primary-dark);
+        color: white;
+        text-align: center;
+        padding: 30px;
+        margin-top: auto;
+        border-top: 5px solid var(--accent);
+    }
+    
+    /* UTILS */
+    input, select { padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1; width: 100%; box-sizing: border-box; margin-bottom: 15px; }
+    label { font-weight: bold; color: var(--text-main); display: block; margin-bottom: 5px; }
+    .skills-container { margin-top: 20px; }
+    .skill-item { margin-bottom: 10px; background: #f4f8fb; padding: 10px; border-left: 4px solid var(--accent); }
+    .contact-info-card { text-align: center; margin-bottom: 30px; }
+    .qr-code-img { width: 150px; height: 150px; border: 5px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 15px; }
+    .form-container { position: relative; width: 100%; height: 1200px; overflow: hidden; border-radius: 8px; margin-top: 20px; background: white; border: 1px solid #ddd; }
+    .form-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+    /* PDF Preview Iframe */
+    .pdf-preview-container {
+        width: 100%;
+        height: 800px; /* Taller for better reading */
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 20px;
+        background: #f9f9f9;
+    }
+    .pdf-preview-container iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+    
+    /* NEW FORUM STYLES */
+    .forum-input-area {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+    .forum-input-area input {
+        margin-bottom: 0;
+        flex: 1;
+    }
+    .forum-embed-container {
+        width: 100%;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-top: 30px;
+        background: white;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+    .forum-embed-container iframe {
+        width: 100%;
+        height: 800px;
+        border: none;
+    }
+
+    /* MEDIA GALLERY - UPDATED STYLES */
+    .gallery-section-block {
+        margin-bottom: 60px;
+    }
+    .gallery-section-block h3 {
+        color: var(--primary);
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+    .video-thumbnail-container {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+        display: block;
+        text-decoration: none;
+    }
+    .video-thumbnail-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+    .video-thumbnail-container img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+    .play-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 50px;
+        height: 50px;
+        background: rgba(37, 99, 235, 0.9);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 20px;
+        pointer-events: none;
+    }
+
+    /* SLIDESHOW STYLES */
+    .slideshow-container {
+        max-width: 800px;
+        position: relative;
+        margin: auto;
+        background: #000;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .mySlides, .clippingsSlide { display: none; }
+
+    .prev, .next {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        width: auto;
+        margin-top: -22px;
+        padding: 16px;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        transition: 0.6s ease;
+        border-radius: 0 3px 3px 0;
+        user-select: none;
+        background-color: rgba(0,0,0,0.3);
+    }
+
+    .next {
+        right: 0;
+        border-radius: 3px 0 0 3px;
+    }
+
+    .prev:hover, .next:hover {
+        background-color: rgba(0,0,0,0.8);
+    }
+
+    .text {
+        color: #f2f2f2;
+        font-size: 15px;
+        padding: 8px 12px;
+        position: absolute;
+        bottom: 8px;
+        width: 100%;
+        text-align: center;
+        background: rgba(0,0,0,0.5);
+    }
+
+    .numbertext {
+        color: #f2f2f2;
+        font-size: 12px;
+        padding: 8px 12px;
+        position: absolute;
+        top: 0;
+    }
+
+    .dot-container {
+        text-align: center;
+        margin-top: 15px;
+    }
+    .dot, .clippingsDot {
+        cursor: pointer;
+        height: 15px;
+        width: 15px;
+        margin: 0 2px;
+        background-color: #bbb;
+        border-radius: 50%;
+        display: inline-block;
+        transition: background-color 0.6s ease;
+    }
+
+    .active, .dot:hover, .clippingsDot:hover {
+        background-color: var(--primary);
+    }
+
+    .fade {
+        animation-name: fade;
+        animation-duration: 1.5s;
+    }
+
+    @keyframes fade {
+        from {opacity: .4} 
+        to {opacity: 1}
+    }
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Cloud Wise</h1>
+    <p>Student Guide to Cloud Storage & Collaboration</p>
+</header>
+
+<nav>
+    <a href="#" onclick="showPage('home')" class="active">Home</a>
+    <a href="#" onclick="showPage('tips')">Tips</a>
+    <a href="#" onclick="showPage('research')">Research</a>
+    <a href="#" onclick="showPage('survey')">Survey</a>
+    <a href="#" onclick="showPage('gallery')">Gallery</a>
+    <a href="#" onclick="showPage('chatbot')">Chatbot</a>
+    <a href="#" onclick="showPage('forum')">Forum</a>
+    <a href="#" onclick="showPage('resources')">Resources</a>
+    <a href="#" onclick="showPage('aboutme')">About & Contact</a>
+</nav>
+
+<!-- HOME PAGE -->
+<section id="home" class="page-section active-section">
+    <h2>Store. Sync. Succeed.</h2>
+    <p style="font-size: 1.2rem; color: #64748b; max-width: 700px; margin: 0 auto 40px;">
+        Your comprehensive guide to using cloud storage effectively for academic success. Never lose a file again.
+    </p>
+    <button class="btn" onclick="showPage('survey')">Start Survey</button>
+
+    <div class="home-content-card">
+        <h3>📚 Introduction</h3>
+        <p>In the modern academic landscape, "My dog ate my homework" has been replaced by "My hard drive crashed." Cloud storage services like Google Drive, OneDrive, and Dropbox have revolutionized how students manage assignments, collaborate on projects, and access learning materials. "Cloud Wise" is an initiative to help students navigate these tools efficiently, ensuring data security, maximizing free storage tiers, and fostering seamless collaboration.</p>
+    </div>
+
+    <div class="home-content-card">
+        <h3>🎯 Objectives</h3>
+        <ul class="objectives-list">
+            <li><strong>Enhance Accessibility:</strong> Teach students how to access files from any device, anywhere, eliminating the need for USB drives.</li>
+            <li><strong>Improve Collaboration:</strong> Demonstrate real-time editing and sharing features for group projects.</li>
+            <li><strong>Ensure Data Security:</strong> Educate on privacy settings, two-factor authentication, and avoiding data breaches.</li>
+            <li><strong>Optimize Storage:</strong> Tips on managing storage space and organizing academic files effectively.</li>
+        </ul>
+    </div>
+
+    <!-- UPDATED: SCOPE OF AWARENESS -->
+    <div class="home-content-card">
+        <h3>🌍 Scope of Awareness</h3>
+        <p>We aim to educate students on critical aspects of cloud safety and efficiency:</p>
+        <div class="scope-grid">
+            <div class="scope-item">
+                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Cybersecurity">
+                <h4>Cybersecurity</h4>
+                <p>Recognizing threats like phishing, weak passwords, and data breaches to protect academic work.</p>
+            </div>
+            <div class="scope-item">
+                <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Data Privacy">
+                <h4>Data Privacy</h4>
+                <p>Understanding who owns the data you upload and how to control visibility settings.</p>
+            </div>
+            <div class="scope-item">
+                <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="File Management">
+                <h4>File Management</h4>
+                <p>Best practices for organizing folders, naming files, and keeping a clean digital workspace.</p>
+            </div>
+        </div>
+    </div>
+    <!-- END UPDATE -->
+
+</section>
+
+<!-- TIPS PAGE -->
+<section id="tips" class="page-section">
+    <h2 style="font-size: 2.5rem; background: var(--grad-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 30px;">Cloud Tips</h2>
+    
+    <div class="tips-grid">
+        <div class="dos-box">
+            <h3>✅ Do's</h3>
+            <ul>
+                <li><strong>Organize:</strong> Create folders for each semester or subject (e.g., "2023_Fall_Math").</li>
+                <li><strong>Enable 2FA:</strong> Turn on Two-Factor Authentication for an extra layer of security.</li>
+                <li><strong>Share Wisely:</strong> Use "View Only" links for submissions to prevent accidental editing by others.</li>
+                <li><strong>Check Storage:</strong> Regularly clear out the "Trash" or "Bin" to free up space.</li>
+                <li><strong>Sync Selectively:</strong> Use "Online Only" mode for large files to save space on your laptop.</li>
+            </ul>
+        </div>
+        <div class="donts-box">
+            <h3>❌ Don'ts</h3>
+            <ul>
+                <li><strong>Don't Share Sensitive Info:</strong> Avoid storing passwords or ID cards in public shared folders.</li>
+                <li><strong>Don't Ignore Conflicts:</strong> Resolve "Sync Conflicts" immediately to avoid duplicate files.</li>
+                <li><strong>Don't Rely on One:</strong> Have a backup (e.g., keep a copy on an external drive just in case).</li>
+                <li><strong>Don't Keep Trash:</strong> Files in the recycle bin still count towards your storage quota sometimes.</li>
+                <li><strong>Don't Use Public Wi-Fi:</strong> Without a VPN when accessing sensitive academic data.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- CLOUD ADOPTION CYCLE -->
+    <div id="recovery-cycle-wrapper">
+        <div class="cycle-card">
+            <h3>The Cloud Adoption Cycle</h3>
+            <p class="subtitle">6 steps to mastering cloud storage as a student.</p>
+
+            <div class="diagram-container">
+                
+                <!-- STATIC CONNECTOR -->
+                <div class="connector">
+                    <svg class="connector-svg" viewBox="0 0 100 100">
+                        <path d="M 50,5 A 45,45 0 1,1 49.9,5" class="connector-path" />
+                    </svg>
+                </div>
+
+                <!-- Center Hub -->
+                <div class="hex center-hex">
+                    <span>CLOUD</span>
+                    <span>WORKFLOW</span>
+                </div>
+
+                <!-- Step 1: SELECT -->
+                <div class="hex outer-hex pos-1">
+                    <div class="hex-content">
+                        <div class="step-icon">☁️</div>
+                        <h4 style="color: var(--c-step-1)">1. SELECT</h4>
+                        <p>Choose a service (Drive, OneDrive, Dropbox).</p>
+                    </div>
+                </div>
+
+                <!-- Step 2: SETUP -->
+                <div class="hex outer-hex pos-2">
+                    <div class="hex-content">
+                        <div class="step-icon">⚙️</div>
+                        <h4 style="color: var(--c-step-2)">2. SETUP</h4>
+                        <p>Install desktop app & mobile app.</p>
+                    </div>
+                </div>
+
+                <!-- Step 3: UPLOAD -->
+                <div class="hex outer-hex pos-3">
+                    <div class="hex-content">
+                        <div class="step-icon">⬆️</div>
+                        <h4 style="color: var(--c-step-3)">3. UPLOAD</h4>
+                        <p>Transfer existing files and notes.</p>
+                    </div>
+                </div>
+
+                <!-- Step 4: SYNC -->
+                <div class="hex outer-hex pos-4">
+                    <div class="hex-content">
+                        <div class="step-icon">🔄</div>
+                        <h4 style="color: var(--c-step-4)">4. SYNC</h4>
+                        <p>Ensure devices update automatically.</p>
+                    </div>
+                </div>
+
+                <!-- Step 5: SHARE -->
+                <div class="hex outer-hex pos-5">
+                    <div class="hex-content">
+                        <div class="step-icon">🤝</div>
+                        <h4 style="color: var(--c-step-5)">5. SHARE</h4>
+                        <p>Collaborate with peers securely.</p>
+                    </div>
+                </div>
+
+                <!-- Step 6: SECURE -->
+                <div class="hex outer-hex pos-6">
+                    <div class="hex-content">
+                        <div class="step-icon">🛡️</div>
+                        <h4 style="color: var(--c-step-6)">6. SECURE</h4>
+                        <p>Manage permissions & passwords.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <h3>Proactive Safety Practices</h3>
+    <div class="grid-container">
+        <div class="card info-box">
+            <h3>🎓 Student Advantage</h3>
+            <p>Many universities provide free access to Microsoft 365 (1TB OneDrive) or unlimited Google Drive storage with your student email (.edu). Always check your school benefits before paying for extra storage!</p>
+        </div>
+        <div class="card info-box" style="background: #fff7ed; border-left-color: #f97316;">
+            <h3>📁 Naming Conventions</h3>
+            <p>Use standard naming: "Subject_AssignmentName_Date". This prevents confusion when searching for files or sharing them with professors.</p>
+        </div>
+    </div>
+
+    <!-- VIDEO SECTION -->
+    <h3>Featured Stories</h3>
+    <div class="video-card">
+        <a href="https://youtu.be/8C_kHJ5YEiA" target="_blank" class="video-thumbnail-container" style="border-radius: 0;">
+            <img src="https://img.youtube.com/vi/8C_kHJ5YEiA/hqdefault.jpg" alt="Cloud Storage Stories">
+            <div class="play-icon">▶</div>
+        </a>
+        <div class="video-caption">
+            <h4 style="margin:0;">Cloud Storage Insights</h4>
+            <p style="font-size:0.9rem; color:#666;">Watch real stories and tips about managing data in the cloud.</p>
+        </div>
+    </div>
+</section>
+
+<!-- RESEARCH PAGE -->
+<section id="research" class="page-section">
+    <h2>Research & Statistics</h2>
+    <div class="card">
+        <h3>📄 Abstract</h3>
+        <p>This research investigates the usage patterns of cloud storage services among university and high school students. With the shift towards digital classrooms, understanding how students utilize these platforms is crucial. We analyze preferences between major providers (Google Drive vs. OneDrive), storage habits, security awareness, and the impact of cloud tools on collaborative project efficiency.</p>
+    </div>
+    
+    <div class="stat-grid">
+        <div class="stat-card">
+            <div class="stat-number">94%</div>
+            <p>Use Cloud Services</p>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">65%</div>
+            <p>Prefer Google Drive</p>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">40%</div>
+            <p>Ignore 2FA</p>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">78%</div>
+            <p>Collaborate Weekly</p>
+        </div>
+    </div>
+
+    <!-- CHANGED: Key Findings to Key Insights -->
+    <div class="card info-box">
+        <h3>Key Insights</h3>
+        <ul>
+            <li><strong>Platform Preference:</strong> Google Drive dominates the market due to integration with Google Docs and university Gmail accounts.</li>
+            <li><strong>Storage Habits:</strong> A significant number of students (over 60%) organize files only when "absolutely necessary," leading to chaotic digital workspaces.</li>
+            <li><strong>Security Gap:</strong> While most students use cloud storage, a minority enable Two-Factor Authentication (2FA), putting academic data at risk.</li>
+            <li><strong>Collaboration:</strong> Real-time editing is the most valued feature, drastically reducing the time spent on group assignments.</li>
+        </ul>
+    </div>
+
+    <h3>Research Paper Preview</h3>
+    <div class="paper-preview">
+        <h1>Usage of Cloud Storage Services Among Students</h1>
+                
+        <!-- UPDATED: EMBEDDING THE USER'S PROVIDED PDF -->
+        <div class="pdf-preview-container">
+            <!-- 
+                Embed Link Format: https://drive.google.com/file/d/FILE_ID/preview
+                Your Link: https://drive.google.com/file/d/1aAM5BhHqz7-DOq1fxkpHV434j9rj3vPK/view
+            -->
+            <iframe src="https://drive.google.com/file/d/1aAM5BhHqz7-DOq1fxkpHV434j9rj3vPK/preview" allow="autoplay"></iframe>
+        </div>
+        <!-- END PDF EMBED -->
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="https://drive.google.com/file/d/1aAM5BhHqz7-DOq1fxkpHV434j9rj3vPK/view?usp=sharing" target="_blank" class="btn">Download Full Study (PDF)</a>
+        </div>
+    </div>
+</section>
+
+<!-- SURVEY PAGE -->
+<section id="survey" class="page-section">
+    <h2>Data Habits Survey</h2>
+    <div class="card">
+        <p>Help us understand your cloud storage habits. Fill out the form below.</p>
+        <!-- Embedded Google Form -->
+        <div class="form-container">
+            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSehYJDyYOOW-wfB1SsE8DtaNzgf84-FYB4wInTG-hX7xPkh1g/viewform?embedded=true" width="640" height="1054" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+        </div>
+    </div>
+
+    <!-- POLL SECTION -->
+    <div class="poll-container">
+        <h2>Quick Poll</h2>
+        <p>See how your habits compare to other students.</p>
+
+        <!-- Q1 -->
+        <div class="poll-item" id="poll-1">
+            <div class="poll-question">1. Do you use Google Drive as your primary cloud storage?</div>
+            <div class="poll-buttons">
+                <button class="poll-btn" onclick="vote(1, 'yes', 140, 60)">Yes</button>
+                <button class="poll-btn" onclick="vote(1, 'no', 140, 60)">No</button>
+            </div>
+            <div class="poll-results" id="results-1">
+                <div class="result-bar-container">
+                    <div class="bar-yes" style="width: 70%;">70%</div>
+                    <div class="bar-no" style="width: 30%;">30%</div>
+                </div>
+                <div class="result-text"><span>Yes: 140 votes</span><span>No: 60 votes</span></div>
+            </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="poll-item" id="poll-2">
+            <div class="poll-question">2. Have you ever run out of free storage space?</div>
+            <div class="poll-buttons">
+                <button class="poll-btn" onclick="vote(2, 'yes', 90, 100)">Yes</button>
+                <button class="poll-btn" onclick="vote(2, 'no', 90, 100)">No</button>
+            </div>
+            <div class="poll-results" id="results-2">
+                <div class="result-bar-container">
+                    <div class="bar-yes" style="width: 47%;">47%</div>
+                    <div class="bar-no" style="width: 53%;">53%</div>
+                </div>
+                <div class="result-text"><span>Yes: 90 votes</span><span>No: 100 votes</span></div>
+            </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="poll-item" id="poll-3">
+            <div class="poll-question">3. Do you use Two-Factor Authentication (2FA)?</div>
+            <div class="poll-buttons">
+                <button class="poll-btn" onclick="vote(3, 'yes', 60, 140)">Yes</button>
+                <button class="poll-btn" onclick="vote(3, 'no', 60, 140)">No</button>
+            </div>
+            <div class="poll-results" id="results-3">
+                <div class="result-bar-container">
+                    <div class="bar-yes" style="width: 30%;">30%</div>
+                    <div class="bar-no" style="width: 70%;">70%</div>
+                </div>
+                <div class="result-text"><span>Yes: 60 votes</span><span>No: 140 votes</span></div>
+            </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="poll-item" id="poll-4">
+            <div class="poll-question">4. Do you access cloud files via mobile app?</div>
+            <div class="poll-buttons">
+                <button class="poll-btn" onclick="vote(4, 'yes', 160, 40)">Yes</button>
+                <button class="poll-btn" onclick="vote(4, 'no', 160, 40)">No</button>
+            </div>
+            <div class="poll-results" id="results-4">
+                <div class="result-bar-container">
+                    <div class="bar-yes" style="width: 80%;">80%</div>
+                    <div class="bar-no" style="width: 20%;">20%</div>
+                </div>
+                <div class="result-text"><span>Yes: 160 votes</span><span>No: 40 votes</span></div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- MEDIA GALLERY PAGE -->
+<section id="gallery" class="page-section">
+    <h2>Media Gallery</h2>
+    <p>Visual guides and tutorials on cloud storage usage.</p>
+
+    <!-- PART 1: EDUCATIONAL VIDEOS - UPDATED WITH 3 VIDEOS -->
+    <div class="gallery-section-block">
+        <h3>🎓 Video Tutorials</h3>
+        <div class="gallery-grid">
+            <!-- Video 1 -->
+            <a href="https://youtu.be/3WANMc8EqPM" target="_blank" class="video-thumbnail-container">
+                <img src="https://img.youtube.com/vi/3WANMc8EqPM/hqdefault.jpg" alt="Cloud Storage Tutorial">
+                <div class="play-icon">▶</div>
+            </a>
+
+            <!-- Video 2 -->
+            <a href="https://youtu.be/qgw01w0iYjA" target="_blank" class="video-thumbnail-container">
+                <img src="https://img.youtube.com/vi/qgw01w0iYjA/hqdefault.jpg" alt="Cloud Storage Tips">
+                <div class="play-icon">▶</div>
+            </a>
+
+            <!-- Video 3 -->
+            <a href="https://youtu.be/rKvN9jLLgQo" target="_blank" class="video-thumbnail-container">
+                <img src="https://img.youtube.com/vi/rKvN9jLLgQo/hqdefault.jpg" alt="Cloud Storage Overview">
+                <div class="play-icon">▶</div>
+            </a>
+        </div>
+    </div>
+
+    <!-- PART 2: CLIPPINGS -->
+    <div class="gallery-section-block">
+        <h3>📰 News Clippings</h3>
+        
+        <div class="slideshow-container">
+            
+            <!-- Clipping 1 -->
+            <div class="clippingsSlide fade">
+                <div class="numbertext">1 / 4</div>
+                <img src="https://z-cdn-media.chatglm.cn/files/a544ee8c-03f6-4e18-b00f-e035fdadbe00.png?auth_key=1873736057-6800f1f2f9cf45a292826b3fbc126729-0-2312b804791c15f7a4bccddb747edab6" style="width:100%">
+                <div class="text">"Hacked off by cyber freeze" - Government Data Security</div>
+            </div>
+
+            <!-- Clipping 2 -->
+            <div class="clippingsSlide fade">
+                <div class="numbertext">2 / 4</div>
+                <img src="https://z-cdn-media.chatglm.cn/files/16021a57-c718-47c7-82a2-a13bc2d86d1c.png?auth_key=1873736057-a6df990a5b1745fb867635ee4a36d3cf-0-80f71a8d3033a4207046a184ac77f599" style="width:100%">
+                <div class="text">"Cloud computing not always best solution" - The Morning Bulletin</div>
+            </div>
+
+            <!-- Clipping 3 -->
+            <div class="clippingsSlide fade">
+                <div class="numbertext">3 / 4</div>
+                <img src="https://z-cdn-media.chatglm.cn/files/d07147fe-4350-4eff-ad91-848e388f1cc2.png?auth_key=1873736057-4871891da1df408aaf663be252356bfd-0-fb927fa1d4bda33762c74e8b1f974a55" style="width:100%">
+                <div class="text">"Get your head in the clouds" - Syncing & Storage</div>
+            </div>
+            
+            <!-- Clipping 4 -->
+            <div class="clippingsSlide fade">
+                <div class="numbertext">4 / 4</div>
+                <img src="https://z-cdn-media.chatglm.cn/files/74dae4af-fb11-42bd-a59d-de49c3274932.png?auth_key=1873736057-bfbc878a46564ec6a5c1d45a7ebe7691-0-07c6ec790669eb950157d426e0dad6c5" style="width:100%">
+                <div class="text">"Is cloud the host with the most?" - Cloud Hosting Insights</div>
+            </div>
+
+            <!-- Next and previous buttons -->
+            <a class="prev" onclick="plusClippingsSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusClippingsSlides(1)">&#10095;</a>
+        </div>
+        <br>
+
+        <!-- The dots/circles -->
+        <div style="text-align:center" class="dot-container">
+            <span class="clippingsDot" onclick="currentClippingsSlide(1)"></span> 
+            <span class="clippingsDot" onclick="currentClippingsSlide(2)"></span> 
+            <span class="clippingsDot" onclick="currentClippingsSlide(3)"></span>
+            <span class="clippingsDot" onclick="currentClippingsSlide(4)"></span> 
+        </div>
+    </div>
+
+    <!-- PART 3: AWARENESS POSTERS - UPDATED WITH USER IMAGES -->
+    <div class="gallery-section-block">
+        <h3>📢 Awareness Posters</h3>
+        <p style="font-size:0.9rem; color:#666; margin-bottom:15px;">Educational posters on cloud computing and storage concepts.</p>
+        
+        <div class="slideshow-container">
+            
+            <!-- Poster 1 -->
+            <div class="mySlides fade">
+                <div class="numbertext">1 / 4</div>
+                <img src="https://z-cdn-media.chatglm.cn/files/aef4e330-4c19-405f-a670-3a3c928915ef.png?auth_key=1873741722-ae22bf85cc2a46aa8d4061de6037a54e-0-93cf36b9d3fcfebe6eab48159cb4050d" style="width:100%">
+                <div class="text">Cloud Computing Posters - Interaction with Devices</div>
+            </div>
+
+            <!-- Poster 2 -->
+            <div class="mySlides fade">
+                <div class="numbertext">2 / 4</div>
+                <img src="https://z-cdn-media.chatglm.cn/files/81624072-8936-4181-b4cb-4e83dd0e4ad6.png?auth_key=1873741722-720ab4f7f6fe4cedb271575a8a1063f1-0-737c909fb823f0585d485431767e7561" style="width:100%">
+                <div class="text">Cloud Storage Illustration - Syncing with Mobile</div>
+            </div>
+
+            <!-- Poster 3 -->
+            <div class="mySlides fade">
+                <div class="numbertext">3 / 4</div>
+                <img src="https://z-cdn-media.chatglm.cn/files/ef08e2fb-9b4d-4f9e-b77e-113e62380ca8.png?auth_key=1873741722-1fc81a330dd24d61ac3837b3309aacd8-0-2ab8e4a74637355a0f04fe825ba1d728" style="width:100%">
+                <div class="text">Cloud Storage Banners - Information & Devices</div>
+            </div>
+
+            <!-- Poster 4 -->
+            <div class="mySlides fade">
+                <div class="numbertext">4 / 4</div>
+                <img src="https://z-cdn-media.chatglm.cn/files/ed306b78-e195-40da-b32b-cd5c86fdcb86.png?auth_key=1873741722-c1b3798697c54cfd92025c0b95446286-0-d45b61ec3b4fd0727cae1bcd10912139" style="width:100%">
+                <div class="text">Infographic: What is the Cloud?</div>
+            </div>
+
+            <!-- Next and previous buttons -->
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+        <br>
+
+        <!-- The dots/circles -->
+        <div style="text-align:center" class="dot-container">
+            <span class="dot" onclick="currentSlide(1)"></span> 
+            <span class="dot" onclick="currentSlide(2)"></span> 
+            <span class="dot" onclick="currentSlide(3)"></span>
+            <span class="dot" onclick="currentSlide(4)"></span> 
+        </div>
+    </div>
+</section>
+
+<!-- CHATBOT PAGE -->
+<section id="chatbot" class="page-section">
+    <h2>Cloud Assistant</h2>
+    <div class="card">
+        <div class="chat-container">
+            <div class="chat-log" id="chatLog">
+                <div class="chat-message bot-msg">Hi there! I can answer questions about Google Drive, OneDrive, or general cloud storage tips. Try asking me something!</div>
+            </div>
+            <div style="padding: 15px; background: #f8fafc; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <strong style="color: var(--primary);">Suggested Questions:</strong>
+                    <button onclick="toggleFAQ()" style="background:none; border:none; color: var(--primary); cursor: pointer; font-weight: bold;">Show More</button>
+                </div>
+                <div id="faqContainer" style="display: flex; flex-wrap: wrap; gap: 5px;">
+                    <button class="faq-chip" onclick="askQuestion('What is cloud storage?')">What is cloud storage?</button>
+                    <button class="faq-chip" onclick="askQuestion('Is Google Drive free?')">Is Google Drive free?</button>
+                    <button class="faq-chip" onclick="askQuestion('How to share a file?')">How to share a file?</button>
+                    <button class="faq-chip" onclick="askQuestion('What is 2FA?')">What is 2FA?</button>
+                    <button class="faq-chip" onclick="askQuestion('Difference between sync and backup?')">Sync vs Backup?</button>
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="handleChat(event)">
+                <button class="btn" onclick="sendMessage()" style="padding: 10px 20px; font-size: 0.9rem;">Send</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FORUM PAGE -->
+<section id="forum" class="page-section">
+    <h2>Student Forum</h2>
+    
+    <div class="card">
+        <!-- DISCUSSION BOARD BUTTON -->
+        <button class="btn" style="background: var(--accent); margin-bottom: 20px; width: 100%;" onclick="openDiscussionBoard()">📖 Open General Discussion</button>
+
+        <!-- HIDDEN EMBED CONTAINER -->
+        <div id="discussionBoardContainer" class="forum-embed-container" style="display: none;">
+            <div style="background: #f1f5f9; padding: 10px; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-weight: bold; color: var(--primary);">Discussion Thread</span>
+                <button onclick="closeDiscussion()" style="background: #ef4444; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Close</button>
+            </div>
+            <iframe id="blogFrame" src="" allowfullscreen></iframe>
+        </div>
+
+        <h3>Recent Topics</h3>
+        <table class="forum-table">
+            <thead>
+                <tr>
+                    <th>Topic</th>
+                    <th>Author</th>
+                    <th>Replies</th>
+                </tr>
+            </thead>
+            <tbody id="forumTableBody">
+                <tr>
+                    <td>Best cloud service for large video files?</td>
+                    <td>MediaStudent</td>
+                    <td>15</td>
+                </tr>
+                <tr>
+                    <td>How to recover a deleted Google Doc?</td>
+                    <td>PanicMode</td>
+                    <td>8</td>
+                </tr>
+                <tr>
+                    <td>OneDrive vs Google Drive for College?</td>
+                    <td>Freshman2024</td>
+                    <td>32</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- RESOURCES PAGE -->
+<section id="resources" class="page-section">
+    <h2>Resources</h2>
+    <div class="grid-container">
+        <div class="card">
+            <h3>☁️ Cloud Providers</h3>
+            <ul>
+                <li><a href="https://www.google.com/drive/" target="_blank">Google Drive Official</a></li>
+                <li><a href="https://www.microsoft.com/en-us/microsoft-365/onedrive/online-cloud-storage" target="_blank">Microsoft OneDrive</a></li>
+                <li><a href="https://www.dropbox.com/" target="_blank">Dropbox</a></li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>🔐 Security Tools</h3>
+            <ul>
+                <li><a href="https://haveibeenpwned.com/" target="_blank">Have I Been Pwned?</a> (Check data breaches)</li>
+                <li><a href="https://authy.com/" target="_blank">Authy</a> (2FA App)</li>
+            </ul>
+        </div>
+        <!-- HELPLINES SECTION -->
+        <div class="card">
+            <h3>📚 Tutorials</h3>
+            <ul>
+                <li><a href="https://support.google.com/drive/?hl=en#topic=70016" target="_blank">Google Drive Help Center</a></li>
+                <li><a href="https://support.microsoft.com/en-us/onedrive" target="_blank">OneDrive Support</a></li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- COMBINED ABOUT ME & CONTACT SECTION -->
+<section id="aboutme" class="page-section">
+    <h2>About Me & Contact</h2>
+    <div class="card">
+        <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+            <img src="https://z-cdn-media.chatglm.cn/files/268dc090-3027-409f-8aab-594d11a3534a.jpeg?auth_key=1873694529-5164e48d723346b4b254ed469be5c8c5-0-802d18b2845901a8ea9a709426a25ec6" 
+                 alt="Mr. Moksh Vyas" 
+                 style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+            <div style="flex: 1;">
+                <h3 style="margin-top:0; color: var(--primary);">Mr. Moksh Vyas</h3>
+                <p>I am a passionate advocate for Digital Literacy in Education. This project is designed to help students navigate the complexities of modern file management and cloud collaboration to enhance their academic productivity.</p>
+            </div>
+        </div>
+        
+        <div class="skills-container">
+            <h3>Technical Skills</h3>
+            <div class="skill-item">
+                <span class="skill-name">Cloud Infrastructure & Management</span>
+            </div>
+            <div class="skill-item">
+                <span class="skill-name">Cybersecurity Awareness</span>
+            </div>
+            <div class="skill-item">
+                <span class="skill-name">Web Development</span>
+            </div>
+            <div class="skill-item">
+                <span class="skill-name">Educational Technology</span>
+            </div>
+        </div>
+
+        <!-- Integrated Contact Information -->
+        <hr style="margin: 40px 0; border: 0; border-top: 1px solid #eee;">
+        
+        <div class="contact-info-card" style="margin-top: 0;">
+            <h3>Get in Touch</h3>
+            <p>Have questions or suggestions? Feel free to reach out.</p>
+            
+            <!-- QR CODE IMAGE - UPDATED -->
+            <img src="https://z-cdn-media.chatglm.cn/files/863a804d-e9c5-480b-9a69-c5712d239755.jpeg?auth_key=1873746938-8c54ba570e69466f969f2404fd2e6ba1-0-ba7a343997b0b2d2ff591a76b11ec3be" alt="QR Code" class="qr-code-img">
+            
+            <p style="font-weight: bold; font-size: 1.2rem; margin-bottom: 0;">Mokshvyas65@mail.com</p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2026 Cloud Wise Awareness Program | All Rights Reserved</p>
+</footer>
+
+<script>
+    function showPage(pageId) {
+        var sections = document.querySelectorAll('.page-section');
+        sections.forEach(function(section) {
+            section.classList.remove('active-section');
+        });
+
+        var targetSection = document.getElementById(pageId);
+        if(targetSection) {
+            targetSection.classList.add('active-section');
+        }
+
+        var navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(function(link) {
+            link.classList.remove('active');
+            if(link.getAttribute('onclick').includes("'" + pageId + "'")) {
+                link.classList.add('active');
+            }
+        });
+        
+        window.scrollTo(0, 0);
+    }
+
+    function vote(id, answer, baseYes, baseNo) {
+        var pollItem = document.getElementById('poll-' + id);
+        var resultsDiv = document.getElementById('results-' + id);
+        var buttons = pollItem.querySelectorAll('.poll-btn');
+
+        buttons.forEach(function(btn) { btn.style.display = 'none'; });
+        resultsDiv.style.display = 'block';
+
+        var yesVotes = baseYes;
+        var noVotes = baseNo;
+
+        if (answer === 'yes') yesVotes += 1;
+        else noVotes += 1;
+
+        var total = yesVotes + noVotes;
+        var yesPercent = Math.round((yesVotes / total) * 100);
+        var noPercent = 100 - yesPercent;
+
+        var yesBar = resultsDiv.querySelector('.bar-yes');
+        var noBar = resultsDiv.querySelector('.bar-no');
+        
+        yesBar.style.width = yesPercent + '%';
+        yesBar.innerText = yesPercent + '%';
+        noBar.style.width = noPercent + '%';
+        noBar.innerText = noPercent + '%';
+    }
+
+    // Chatbot Logic
+    var showingGroup1 = true;
+    var group1HTML = `
+        <button class="faq-chip" onclick="askQuestion('What is cloud storage?')">What is cloud storage?</button>
+        <button class="faq-chip" onclick="askQuestion('Is Google Drive free?')">Is Google Drive free?</button>
+        <button class="faq-chip" onclick="askQuestion('How to share a file?')">How to share a file?</button>
+        <button class="faq-chip" onclick="askQuestion('What is 2FA?')">What is 2FA?</button>
+        <button class="faq-chip" onclick="askQuestion('Difference between sync and backup?')">Sync vs Backup?</button>
+    `;
+    var group2HTML = `
+        <button class="faq-chip" onclick="askQuestion('Best cloud for students?')">Best cloud for students?</button>
+        <button class="faq-chip" onclick="askQuestion('How to upgrade storage?')">Upgrade storage?</button>
+        <button class="faq-chip" onclick="askQuestion('Is cloud storage safe?')">Is it safe?</button>
+        <button class="faq-chip" onclick="askQuestion('Can I access offline?')">Work offline?</button>
+    `;
+
+    function toggleFAQ() {
+        var container = document.getElementById('faqContainer');
+        container.innerHTML = showingGroup1 ? group2HTML : group1HTML;
+        showingGroup1 = !showingGroup1;
+    }
+
+    function askQuestion(question) {
+        var input = document.getElementById("chatInput");
+        input.value = question;
+        sendMessage();
+    }
+
+    function sendMessage() {
+        var input = document.getElementById("chatInput");
+        var log = document.getElementById("chatLog");
+        var text = input.value.trim();
+        if(text === "") return;
+
+        var userDiv = document.createElement("div");
+        userDiv.className = "chat-message user-msg";
+        userDiv.innerText = text;
+        log.appendChild(userDiv);
+
+        var botDiv = document.createElement("div");
+        botDiv.className = "chat-message bot-msg";
+        var lowerText = text.toLowerCase();
+
+        if (lowerText.includes("what is cloud storage")) {
+            botDiv.innerText = "Cloud storage is a service where data is remotely maintained, managed, and backed up. It allows you to access files from any device via the internet.";
+        } else if (lowerText.includes("free") || lowerText.includes("google drive")) {
+            botDiv.innerText = "Yes, Google Drive offers 15GB of free storage. OneDrive offers 5GB. Many students get extra space with their .edu email addresses!";
+        } else if (lowerText.includes("share")) {
+            botDiv.innerText = "Right-click the file and select 'Share'. You can then enter email addresses or get a shareable link. Remember to set permissions to 'Viewer' or 'Editor'.";
+        } else if (lowerText.includes("2fa") || lowerText.includes("security")) {
+            botDiv.innerText = "Two-Factor Authentication (2FA) adds an extra layer of security. You need a code from your phone + your password to log in.";
+        } else if (lowerText.includes("sync") || lowerText.includes("backup")) {
+            botDiv.innerText = "Sync keeps files identical across devices (changes reflect everywhere). Backup creates a copy that stays static, used for recovery if the original is lost.";
+        } else {
+            botDiv.innerText = "That's a great question about cloud storage! For detailed guides, check the Resources section.";
+        }
+        
+        log.appendChild(botDiv);
+        log.scrollTop = log.scrollHeight;
+        input.value = "";
+    }
+
+    function handleChat(event) {
+        if (event.key === "Enter") sendMessage();
+    }
+
+    function openDiscussionBoard() {
+        var container = document.getElementById("discussionBoardContainer");
+        var frame = document.getElementById("blogFrame");
+        container.style.display = "block";
+        frame.src = "https://usageofcloud.blogspot.com/2026/03/usage-of-cloud-storage-services-among.html";
+        container.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function closeDiscussion() {
+        var container = document.getElementById("discussionBoardContainer");
+        var frame = document.getElementById("blogFrame");
+        container.style.display = "none";
+        frame.src = "";
+    }
+
+    // SLIDESHOW SCRIPT (ORIGINAL AWARENESS POSTERS)
+    let slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        let dots = document.getElementsByClassName("dot");
+        if (n > slides.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex-1].style.display = "block";
+        dots[slideIndex-1].className += " active";
+    }
+
+    // SLIDESHOW SCRIPT FOR CLIPPINGS
+    let clipSlideIndex = 1;
+    showClippingsSlides(clipSlideIndex);
+
+    function plusClippingsSlides(n) {
+        showClippingsSlides(clipSlideIndex += n);
+    }
+
+    function currentClippingsSlide(n) {
+        showClippingsSlides(clipSlideIndex = n);
+    }
+
+    function showClippingsSlides(n) {
+        let i;
+        let slides = document.getElementsByClassName("clippingsSlide");
+        let dots = document.getElementsByClassName("clippingsDot");
+        if (n > slides.length) {clipSlideIndex = 1}
+        if (n < 1) {clipSlideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[clipSlideIndex-1].style.display = "block";
+        dots[clipSlideIndex-1].className += " active";
+    }
+</script>
+
+</body>
+</html>
